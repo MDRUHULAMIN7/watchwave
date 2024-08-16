@@ -72,6 +72,19 @@ console.log(products[0]);
         const sortedByPriceDesc = [...allproducts]?.sort((a, b) => b.price - a.price);
         setProducts(sortedByPriceDesc);
     }
+
+   
+
+const handleCategoryChange = (category) => {
+  const filteredData = allproducts?.filter(product => product.category  === category
+  );
+  setProducts(filteredData)
+};
+
+
+
+// Then render your filtered data
+
     
     return (
         <div>
@@ -86,7 +99,7 @@ console.log(products[0]);
 </form>
          
             <section className="mx-auto px-3 md:flex justify-center  gap-2 text-black">
-                <div className="md:w-1/5 w-full flex md:flex-col md:gap-y-3 gap-x-2">
+                <div className="md:w-1/5 w-full md:h-screen  flex md:flex-col md:gap-y-3 gap-x-2">
                 <div className="mx-2">
                 <select
   className="select select-info border-none w-full text-lg space-y-2 max-w-xs bg-[#ADD8E6]"
@@ -121,11 +134,11 @@ console.log(products[0]);
 </select>
 
                 </div>
-
+              {/* brand */}
                 <select
   name="brand"
   id="brand"
-  className="border rounded p-3 mx-2 border-none bg-[#ADD8E6]"
+  className=" rounded p-3 mx-2 border-none bg-[#ADD8E6]"
   onChange={(e) => handleBrandChange(e.target.value)} // Assuming you have a function to handle the change
 >
   <option disabled selected value="">Select Brands</option> {/* For showing all data when no brand is selected */}
@@ -140,7 +153,23 @@ console.log(products[0]);
   <option value="Fossil">Fossil</option>
   <option value="Longines">Longines</option>
 </select>
-                
+
+{/* categoriess */}
+<select
+  name="category"
+  id="category"
+  className=" rounded  p-3 mx-2 border-none bg-[#ADD8E6]"
+  onChange={(e) => handleCategoryChange(e.target.value)} // Assuming you have a function to handle the change
+>
+  <option value="">Select Categories</option> {/* For showing all data when no category is selected */}
+  <option value="Smart Watch">Smart Watches</option>
+  <option value="Classic Watch">Classic Watch</option>
+  <option value="Sports Watch">Sports Watch</option>
+  <option value="Luxury Watch">Luxury Watches</option>
+
+
+</select>
+ 
                 
                 
                 </div>
