@@ -99,10 +99,10 @@ const handleCategoryChange = (category) => {
 </form>
          
             <section className="mx-auto px-3 md:flex justify-center  gap-2 text-black">
-                <div className="md:w-1/5 w-full md:h-screen  flex md:flex-col md:gap-y-3 gap-x-2">
-                <div className="mx-2">
+                <div className="md:w-1/5 w-full md:h-screen   flex-wrap gap-y-2 md:flex-col md:gap-y-3 gap-x-2">
+                <div className="m-2">
                 <select
-  className="select select-info border-none w-full text-lg space-y-2 max-w-xs bg-[#ADD8E6]"
+  className="select select-info border-none w-full text-lg space-y-2  bg-[#ADD8E6]"
   onChange={(e) => {
     if (e.target.value === "newToOld") {
       handlePrice1();
@@ -117,9 +117,9 @@ const handleCategoryChange = (category) => {
 </select>
 
                 </div>
-                <div className="mx-2">
+                <div className="m-2 ">
                 <select
-  className="select select-info border-none w-full text-lg space-y-2 max-w-xs bg-[#ADD8E6]"
+  className="select select-info border-none w-full text-lg  space-y-2  bg-[#ADD8E6]"
   onChange={(e) => {
     if (e.target.value === "newToOld") {
       handleDate1();
@@ -138,7 +138,7 @@ const handleCategoryChange = (category) => {
                 <select
   name="brand"
   id="brand"
-  className=" rounded p-3 mx-2 border-none bg-[#ADD8E6]"
+  className=" rounded p-3 m-2 w-11/12 border-none bg-[#ADD8E6]"
   onChange={(e) => handleBrandChange(e.target.value)} // Assuming you have a function to handle the change
 >
   <option disabled selected value="">Select Brands</option> {/* For showing all data when no brand is selected */}
@@ -158,7 +158,7 @@ const handleCategoryChange = (category) => {
 <select
   name="category"
   id="category"
-  className=" rounded  p-3 mx-2 border-none bg-[#ADD8E6]"
+  className=" rounded  p-3 m-2 w-11/12 md:mx-2 border-none bg-[#ADD8E6]"
   onChange={(e) => handleCategoryChange(e.target.value)} // Assuming you have a function to handle the change
 >
   <option value="">Select Categories</option> {/* For showing all data when no category is selected */}
@@ -173,7 +173,7 @@ const handleCategoryChange = (category) => {
                 
                 
                 </div>
-                <div className="md:w-4/5 w-full ">
+                <div className="md:w-4/5 w-full mt-2 md:mt-0">
                 
                 {isLoading ? <div className="text-5xl flex justify-center items-center">Loading</div> :
                 
