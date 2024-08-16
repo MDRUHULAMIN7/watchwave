@@ -2,7 +2,7 @@
 import logo from"../../../public/images/logo.png"
 const Footer = () => {
     return (
-        <footer className="footer bg-neutral text-neutral-content p-10">
+        <footer className="footer mt-5 bg-neutral text-neutral-content p-10">
         <aside>
         <img className="h-32 md:w-72" src={logo} alt="" />
           <p>

@@ -22,7 +22,7 @@ const Home = () => {
            </section>
 
            <section>
-           <div className=" w-full mt-2 ">
+           <div className=" w-full mt-2 mb-5">
 
             <h1 className="my-4 text-3xl md:text-5xl font-serif text-white text-center">Products</h1>
                 
@@ -51,9 +51,11 @@ const Home = () => {
                       </div>
                     )}
                 </aside>}
-                </div>
 
-              <Link className="text-xl text-white bg-teal-300 rounded-md px-4 py-2 text-center">  <button >Show All</button></Link>
+                
+                </div>
+                <button className="my-5 md:ml-20"><Link to={'/allproducts'} className="text-xl text-white bg-teal-300 rounded-md px-4 py-2 text-center mb-5">  <button >Show All</button></Link></button>
+              
            </section>
         </div>
     );
