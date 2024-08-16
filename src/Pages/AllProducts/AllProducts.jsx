@@ -175,7 +175,11 @@ const handleCategoryChange = (category) => {
                 </div>
                 <div className="md:w-4/5 w-full mt-2 md:mt-0">
                 
-                {isLoading ? <div className="text-5xl flex justify-center items-center">Loading</div> :
+                {isLoading ?   <div className="flex justify-center items-center text-primary mt-[10%]">  
+           <span className="loading loading-bars loading-sm"></span>
+           <span className="loading loading-bars loading-md"></span>
+           <span className="loading loading-bars loading-lg"></span>
+           <span className="loading loading-bars loading-xl"></span></div>:
                 
                 
                 <aside className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-3 mx-auto">
