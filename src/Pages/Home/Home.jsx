@@ -10,7 +10,7 @@ const Home = () => {
     useEffect(() => {
         // Only update the state if the products are different from allproducts
       
-            setProducts(products[0]);
+            setProducts(products);
             refetch()
         
     },[products,refetch]);
