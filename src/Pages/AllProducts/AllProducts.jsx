@@ -201,7 +201,7 @@ const AllProducts = () => {
                         {Array.from({ length: totalPages }, (_, index) => (
                             <button
                                 key={index + 1}
-                                className={`btn mx-1 ${currentPage === index + 1 ? 'bg-teal-400 text-white border-none' : 'bg-primary text-white border-none'}`}
+                                className={`btn mx-1 ${currentPage === index + 1 ? 'bg-teal-400 text-gray-600  border-none' : 'bg-primary text-white border-none'}`}
                                 onClick={() => handlePageChange(index + 1)}
                             >
                                 {index + 1}
