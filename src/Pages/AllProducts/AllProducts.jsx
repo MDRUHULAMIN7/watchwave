@@ -5,6 +5,7 @@ import UseAxiosPublic from "../../Hooks/UseAxiosPublic";
 
 const AllProducts = () => {
     const [allProducts, setAllProducts] = useState([]);
+    const [searchResults, setSearchResults] = useState([]);
     const [products, isLoading, refetch] = UseProducts();
     const axiosPublic = UseAxiosPublic();
 
@@ -12,8 +13,8 @@ const AllProducts = () => {
     const [productsPerPage, setProductsPerPage] = useState(9);
 
     useEffect(() => {
-        if (Array.isArray(products) && products.length > 0) { // Ensure products is an array
-            setAllProducts(products[0]);
+        if (Array.isArray(products) && products.length > 0) { 
+            setAllProducts(products);
             refetch();
         }
     }, [products, refetch]);
@@ -24,50 +25,57 @@ const AllProducts = () => {
         if (name) {
             axiosPublic.get('/searchproducts', { params: { name } })
                 .then(res => {
-                    if (Array.isArray(res.data)) { // Ensure res.data is an array
-                        setAllProducts(res.data);
-                        setCurrentPage(1); // Reset to first page after search
+                    if (Array.isArray(res.data)) { 
+                        setSearchResults(res.data);
+                        setCurrentPage(1);
                     }
                 })
                 .catch(err => console.log(err));
+        } else {
+            setSearchResults([]); // Reset search results if the search term is cleared
         }
     };
 
     const handleDate1 = () => {
-        const sortedByDate = [...allProducts].sort((a, b) => new Date(b.productCreationDate) - new Date(a.productCreationDate));
+        const sortedByDate = [...getCurrentProductList()].sort((a, b) => new Date(b.productCreationDate) - new Date(a.productCreationDate));
         setAllProducts(sortedByDate);
     };
 
     const handleDate2 = () => {
-        const sortedByDate = [...allProducts].sort((a, b) => new Date(a.productCreationDate) - new Date(b.productCreationDate));
+        const sortedByDate = [...getCurrentProductList()].sort((a, b) => new Date(a.productCreationDate) - new Date(b.productCreationDate));
         setAllProducts(sortedByDate);
     };
 
     const handlePrice1 = () => {
-        const sortedByPriceAsc = [...allProducts].sort((a, b) => a.price - b.price);
+        const sortedByPriceAsc = [...getCurrentProductList()].sort((a, b) => a.price - b.price);
         setAllProducts(sortedByPriceAsc);
     };
 
     const handlePrice2 = () => {
-        const sortedByPriceDesc = [...allProducts].sort((a, b) => b.price - a.price);
+        const sortedByPriceDesc = [...getCurrentProductList()].sort((a, b) => b.price - a.price);
         setAllProducts(sortedByPriceDesc);
     };
 
     const handleBrandChange = (brand) => {
-        const filteredData = allProducts.filter(product => product.brand === brand);
+        const filteredData = getCurrentProductList().filter(product => product.brand === brand);
         setAllProducts(filteredData);
     };
 
     const handleCategoryChange = (category) => {
-        const filteredData = allProducts.filter(product => product.category === category);
+        const filteredData = getCurrentProductList().filter(product => product.category === category);
         setAllProducts(filteredData);
+    };
+
+    // Helper function to determine the current product list (all products or search results)
+    const getCurrentProductList = () => {
+        return searchResults.length > 0 ? searchResults : allProducts;
     };
 
     // Pagination logic
     const indexOfLastProduct = currentPage * productsPerPage;
     const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
-    const currentProducts = Array.isArray(allProducts) ? allProducts.slice(indexOfFirstProduct, indexOfLastProduct) : []; // Ensure slice is called on an array
-    const totalPages = Array.isArray(allProducts) ? Math.ceil(allProducts.length / productsPerPage) : 0;
+    const currentProducts = getCurrentProductList().slice(indexOfFirstProduct, indexOfLastProduct);
+    const totalPages = Math.ceil(getCurrentProductList().length / productsPerPage);
 
     const handlePageChange = (pageNumber) => {
         setCurrentPage(pageNumber);
@@ -75,7 +83,7 @@ const AllProducts = () => {
 
     const handleProductsPerPageChange = (e) => {
         setProductsPerPage(Number(e.target.value));
-        setCurrentPage(1); // Reset to first page after changing products per page
+        setCurrentPage(1);
     };
 
     const handlePrevPage = () => {
@@ -92,8 +100,8 @@ const AllProducts = () => {
 
     return (
         <div>
-            {Array.isArray(allProducts) && allProducts.length > 0 ? (
-                <p className="text-black text-center text-3xl font-serif my-4 underline">Total Products: {allProducts.length}</p>
+            {getCurrentProductList().length > 0 ? (
+                <p className="text-black text-center text-3xl font-serif my-4 underline">Total Products: {getCurrentProductList().length}</p>
             ) : (
                 <p className="text-black text-center text-3xl font-serif my-4 underline">No products available</p>
             )}
@@ -109,7 +117,7 @@ const AllProducts = () => {
                     <option value="12"> Load 12 per page</option>
                     <option value="15"> Load 15 per page</option>
                     <option value="21"> Load 21 per page</option>
-                    <option value={allProducts?.length}> Load All</option>
+                    <option value={getCurrentProductList().length}> Load All</option>
                 </select>
             </div>
 
@@ -170,54 +178,40 @@ const AllProducts = () => {
                             <span className="loading loading-bars loading-sm"></span>
                             <span className="loading loading-bars loading-md"></span>
                             <span className="loading loading-bars loading-lg"></span>
-                            <span className="loading loading-bars loading-xl"></span>
                         </div>
                     ) : (
-                        <aside className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-3 mx-auto">
-                            {currentProducts.map((data, index) => (
-                                <div key={index} className="card shadow-xl rounded-lg border-[1px] border-gray-300 border-opacity-40">
-                                    <img src={data?.productImage} alt={data.name} className="h-64 w-full rounded-t-lg " />
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+                            {currentProducts.map((product, index) => (
+                                <div key={index} className="card card-compact w-full bg-base-100 shadow-xl">
+                                    <figure>
+                                        <img src={product.image} alt={product.name} className="h-[350px] w-full" />
+                                    </figure>
                                     <div className="card-body">
-                                        <h2 className="card-title">{data?.productName}</h2>
-                                        <p className="text-left">{data?.description}</p>
-                                        <p className="text-left">{data?.productCreationDate.slice(0,10)}</p>
-                                        <p className="text-left flex items-center gap-x-1 text-primary font-semibold">{data?.price} <FaBangladeshiTakaSign /></p>
+                                        <h2 className="card-title text-2xl font-serif underline">{product.name}</h2>
+                                        <p className="text-lg">
+                                            Price: <FaBangladeshiTakaSign /> {product.price}
+                                        </p>
                                     </div>
                                 </div>
                             ))}
-                        </aside>
+                        </div>
                     )}
-
-                    {/* Pagination Controls */}
-                    <div className="flex justify-center mt-4">
-                        <button
-                            className={`btn mx-1 ${currentPage === 1 ? 'btn-disabled' : 'bg-primary text-white border-none'}`}
-                            onClick={handlePrevPage}
-                            disabled={currentPage === 1}
-                        >
-                            Prev
-                        </button>
-
-                        {Array.from({ length: totalPages }, (_, index) => (
-                            <button
-                                key={index + 1}
-                                className={`btn mx-1 ${currentPage === index + 1 ? 'bg-teal-400 text-gray-600  border-none' : 'bg-primary text-white border-none'}`}
-                                onClick={() => handlePageChange(index + 1)}
-                            >
-                                {index + 1}
-                            </button>
-                        ))}
-
-                        <button
-                            className={`btn mx-1 ${currentPage === totalPages ? 'btn-disabled' : 'bg-primary text-white border-none'}`}
-                            onClick={handleNextPage}
-                            disabled={currentPage === totalPages}
-                        >
-                            Next
-                        </button>
-                    </div>
                 </div>
             </section>
+
+            <div className="pagination my-6 flex justify-center space-x-2">
+                <button onClick={handlePrevPage} className="btn btn-outline" disabled={currentPage === 1}>
+                    Prev
+                </button>
+                {Array.from({ length: totalPages }, (_, index) => index + 1).map((page) => (
+                    <button key={page} onClick={() => handlePageChange(page)} className={`btn ${page === currentPage ? 'btn-primary' : 'btn-outline'}`}>
+                        {page}
+                    </button>
+                ))}
+                <button onClick={handleNextPage} className="btn btn-outline" disabled={currentPage === totalPages}>
+                    Next
+                </button>
+            </div>
         </div>
     );
 };
