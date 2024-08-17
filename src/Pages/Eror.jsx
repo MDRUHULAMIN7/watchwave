@@ -5,7 +5,7 @@ const Eror= () => {
     const navigate = useNavigate();
 
     const goBack = () => {
-        navigate(-1); // Navigate back to the previous page
+        navigate(-1); 
     };
 
     return (
