@@ -4,13 +4,14 @@ import Main from "../Layouts/Main";
 import SignUp from "../Pages/Signup.jsx/Signup";
 import SignIn from "../Pages/Signup.jsx/Signin";
 import AllProducts from "../Pages/AllProducts/AllProducts";
+import Eror from "../Pages/Eror";
 
 
 export const router = createBrowserRouter([
     {
         path:'/',
         element:<Main></Main>,
-        errorElement:<div>error page</div>,
+        errorElement:<div><Eror></Eror></div>,
         children:[
             {
                 path:'/',
