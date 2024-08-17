@@ -178,7 +178,7 @@ const AllProducts = () => {
                                 <div key={index} className="card shadow-xl rounded-lg border-[1px] border-gray-300 border-opacity-40">
                                     <img src={data?.productImage} alt={data.name} className="h-64 w-full rounded-t-lg " />
                                     <div className="card-body">
-                                        <h2 className="card-title">{data?.name}</h2>
+                                        <h2 className="card-title">{data?.productName}</h2>
                                         <p className="text-left">{data?.description}</p>
                                         <p className="text-left">{data?.productCreationDate.slice(0,10)}</p>
                                         <p className="text-left flex items-center gap-x-1 text-primary font-semibold">{data?.price} <FaBangladeshiTakaSign /></p>
