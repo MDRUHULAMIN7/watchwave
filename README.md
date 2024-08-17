@@ -1,6 +1,5 @@
 # WatchWave
-live link : https://watchwave-eb450.web.app
-
+live link :https://watchwave-client.vercel.app/
 Watch wave is e-comerce website for watch lover .WatchWave is a fullstack website for find your choices watch . Here is also have google and email/password authentication.User can see some products in ui and see all products in products page. user sort the products by releasedate and its price.User can filter products by brands category.Here is a pagination system for good loking ui and a smoth use experine.
 
 ##For localy run the project 
